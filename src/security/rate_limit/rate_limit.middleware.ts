@@ -11,7 +11,7 @@ export class RateLimitMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     const ip = req.ip 
     const key = `rate_limit_${ip}`;
-    const limit = 10;
+    const limit = 1000;
     const ttl = 60; 
 
     let count = (await this.cacheManager.get<number>(key)) || 0;

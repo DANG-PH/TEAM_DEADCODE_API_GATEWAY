@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  redis:
+    image: redis
+    container_name: redis1
+    ports:
+      - '6380:6379'
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight1
+    ports:
+      - '127.0.0.1:5541:5540'
+    environment:
+      - RI_APP_USERNAME=admin
+      - RI_APP_PASSWORD=thuylinh
+    depends_on:
+      - redis
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq1
+    ports:
+      - '5675:5672'
+      - '15675:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 'thuylinh'
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql1
+    ports:
+      - '3308:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Phanthuylinh112@'
+    volumes:
+      - ./configAdmin.sql:/docker-entrypoint-initdb.d/configAdmin.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin1
+    ports:
+      - '127.0.0.1:9999:80'
+    environment:
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
+
+volumes:
+  piston_data:

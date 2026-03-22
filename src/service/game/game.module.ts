@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { GAME_PACKAGE_NAME } from 'proto/game.pb';
-import { AdminController } from './admin.controller';
-import { AdminService } from './admin.service';
+import { GameController } from './game.controller';
+import { GameService } from './game.service';
+import { UserModule } from '../user/user.module';
 import { JwtStrategy } from 'src/security/JWT/jwt.strategy';
 import { RolesGuard } from 'src/security/guard/role.guard';
 
@@ -18,15 +19,16 @@ import { RolesGuard } from 'src/security/guard/role.guard';
           protoPath: join(process.cwd(), 'proto/game.proto'),
           url: process.env.GAME_URL,
           loader: {
-            keepCase: true,
-            objects:  true,
-            arrays:   true,
+            keepCase: true, 
+            objects: true,
+            arrays: true,
           },
         },
       },
     ]),
+    UserModule,
   ],
-  controllers: [AdminController],
-  providers:   [AdminService, JwtStrategy, RolesGuard],
+  controllers: [GameController],
+  providers: [GameService, JwtStrategy, RolesGuard],
 })
-export class AdminModule {}
+export class GameModule {}

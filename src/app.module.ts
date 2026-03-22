@@ -7,7 +7,9 @@ import { UserModule } from './service/user/user.module';
 import { NestModule,MiddlewareConsumer } from '@nestjs/common';
 import { RateLimitMiddleware } from './security/rate_limit/rate_limit.middleware';
 import { RedisModule } from './redis/redis.module';
+import { GameModule } from './service/game/game.module';
 import { AdminModule } from './service/admin/admin.module';
+
 
 @Module({
   imports: [
@@ -17,8 +19,9 @@ import { AdminModule } from './service/admin/admin.module';
     }),
     AuthModule,
     UserModule,
+    RedisModule,
+    GameModule,
     AdminModule,
-    RedisModule
   ],
   controllers: [],
   providers: [],

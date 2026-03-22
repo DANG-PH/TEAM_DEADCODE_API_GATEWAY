@@ -47,7 +47,12 @@ export class AuthController {
       id: authResult.auth_id, 
     };
 
-    const userResult = await this.userService.handleRegister(userRequest);
+    const userResult = await this.userService.handleCreateProfile({
+      auth_id:  authResult.auth_id,
+      username: body.username,
+      email:    body.email,
+      realname: body.realname,
+    });
 
     console.log(userRequest)
 

@@ -15,14 +15,13 @@ async function bootstrap() {
 
   // Bật CORS cho phép frontend gọi API
   app.enableCors({
-    origin: [process.env.ORIGIN_URL], 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
+    origin: '*',
+    credentials: false,
   });
 
   // Cấu hình Swagger
   const config = new DocumentBuilder()
-    .setTitle('GAMOTA TEST')
+    .setTitle('THUY LINH')
     .setDescription('Tài liệu tổng hợp API của API Gateway')
     .setVersion('1.0')
     .addBearerAuth() 
@@ -45,17 +44,3 @@ async function bootstrap() {
 }
 bootstrap();
 
-
-// Client -> POST /use-ngoc-nap
-//        │
-//        ▼
-// [Express Layer]
-//        │  <-- override req.method = PATCH
-//        ▼
-// [Nest Middleware] <-- chưa map route, chỉ có Logger, RateLimit...
-//        ▼
-// [Nest Route Mapping] <-- thấy PATCH → chọn @Patch()
-//        ▼
-// [Controller -> Service]
-//        ▼
-// Client nhận Response
