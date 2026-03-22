@@ -44,6 +44,7 @@ services:
       - '127.0.0.1:9999:80'
     environment:
       PMA_HOST: mysql
+      PMA_ABSOLUTE_URI: https://gamedata.dangpham.id.vn/
     depends_on:
       - mysql
 
